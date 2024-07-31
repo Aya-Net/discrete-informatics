@@ -114,10 +114,10 @@ class sufficient_bv {
                                                    select_(compressed_array((rank_ + log2_n_) / log2_n_,
                                                                             log_n_)),
                                                    select_table_(std::allocator<compressed_array>().allocate(
-                                                           1 << half_log_n_)) {
+                                                           1 << half_log_n_)),
+                                                   select_tree_(std::allocator<multibranch_tree *>().allocate(
+                                                           (rank_ + log2_n_) / log2_n_)) {
         build_rank_();
-        rank_ = rank((int) size_ - 1);
-        select_tree_ = std::allocator<multibranch_tree *>().allocate((rank_ + log2_n_) / log2_n_);
         build_select_();
     }
 
@@ -143,7 +143,7 @@ class sufficient_bv {
 
         int lb_id = i / log2_n_;
         int sb_id = (i - i / log2_n_ * log2_n_) / half_log_n_;
-        return (int)rank_1_[lb_id] + rank_2_[lb_id][sb_id]
+        return (int) rank_1_[lb_id] + rank_2_[lb_id][sb_id]
                + rank_table_[bv_.interval_to_int(lb_id * log2_n_ + sb_id * half_log_n_, i + 1)]
                [i - lb_id * log2_n_ - sb_id * half_log_n_];
     }
