@@ -5,33 +5,36 @@
 #ifndef THEOREM_BIT_VECTOR_H
 #define THEOREM_BIT_VECTOR_H
 
-#include "../util/type.h"
-#include "../util/constant.h"
-
 #include <ostream>
 #include <iostream>
+
+#include "../util/type.h"
+#include "../util/constant.h"
 
 class bit_vector {
   private:
     byte *data_;
+
     size_t size_, block_num_, rank_;
+
   public:
-
     class reference {
-        private:
-            bit_vector &bv_;
-            int i;
-        public:
-            reference() = delete;
-            reference(bit_vector &bv, int i) : bv_(bv), i(i) {}
-            reference &operator=(int value) {
-                bv_.set(i, value);
-                return *this;
-            }
+      private:
+        bit_vector &bv_;
+        int i;
+      public:
+        reference() = delete;
 
-            operator int() {
-                return bv_.get(i);
-            }
+        reference(bit_vector &bv, int i) : bv_(bv), i(i) {}
+
+        reference &operator=(int value) {
+            bv_.set(i, value);
+            return *this;
+        }
+
+        operator int() {
+            return bv_.get(i);
+        }
     };
 
     bit_vector() = delete;
@@ -43,7 +46,7 @@ class bit_vector {
         data_ = new byte[block_num_];
     }
 
-    explicit bit_vector(const std::string& s) {
+    explicit bit_vector(const std::string &s) {
         size_ = s.length();
         block_num_ = (s.length() + BYTE_SIZE - 1) / BYTE_SIZE;
         data_ = new byte[block_num_];
@@ -68,8 +71,7 @@ class bit_vector {
     void set(int i, int value) {
         if (value) {
             data_[i / BYTE_SIZE] |= 1 << (i % BYTE_SIZE);
-        }
-        else {
+        } else {
             data_[i / BYTE_SIZE] &= ~(1 << (i % BYTE_SIZE));
         }
     }
@@ -93,8 +95,7 @@ class bit_vector {
             if ((pos & (BYTE_SIZE - 1)) == (BYTE_SIZE - 1) && pos - l >= (BYTE_SIZE - 1)) {
                 res = (res << BYTE_SIZE) | data_[pos / BYTE_SIZE];
                 pos -= BYTE_SIZE;
-            }
-            else {
+            } else {
                 res = (res << 1) | get(pos);
                 pos--;
             }
@@ -109,8 +110,7 @@ class bit_vector {
                 data_[pos / BYTE_SIZE] = value & ((1 << BYTE_SIZE) - 1);
                 value >>= BYTE_SIZE;
                 pos += BYTE_SIZE;
-            }
-            else {
+            } else {
                 set(pos, value & 1);
                 value >>= 1;
                 pos++;
@@ -153,6 +153,5 @@ class bit_vector {
         return os;
     }
 };
-
 
 #endif //THEOREM_BIT_VECTOR_H

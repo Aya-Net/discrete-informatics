@@ -15,11 +15,14 @@ class multibranch_tree {
     class node {
       private:
         compressed_array rank_;
-        compressed_array branch_;
-        compressed_array data_;
-      public:
 
+        compressed_array branch_;
+
+        compressed_array data_;
+
+      public:
         node **child;
+
         compressed_array lookup_table;
 
         explicit node(int branch, int rank, node *_child[]) : rank_(1, bit_len(rank)), branch_(1, bit_len(branch)),
@@ -63,6 +66,7 @@ class multibranch_tree {
 
   private:
     int max_branch_;
+
     node *root_;
 
     node *build_(std::queue<node *> &nodes) {
@@ -142,6 +146,5 @@ class multibranch_tree {
         return {root->data(), rank};
     }
 };
-
 
 #endif //THEOREM_MULTIBRANCH_TREE_H

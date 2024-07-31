@@ -6,13 +6,12 @@
 #define THEOREM_SUFFICIENT_BV_H
 
 #include "bit_vector.h"
-#include "../util/util.h"
 #include "compressed_array.h"
 #include "multibranch_tree.h"
+#include "../util/util.h"
 
 class sufficient_bv {
   private:
-
     const bit_vector bv_;
 
     size_t size_, rank_;
@@ -170,6 +169,5 @@ class sufficient_bv {
         return os << bv.bv_;
     }
 };
-
 
 #endif //THEOREM_SUFFICIENT_BV_H

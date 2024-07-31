@@ -5,19 +5,25 @@
 #ifndef THEOREM_COMPRESSED_ARRAY_H
 #define THEOREM_COMPRESSED_ARRAY_H
 
-#include "bit_vector.h"
 #include <iostream>
+
+#include "bit_vector.h"
 
 class compressed_array {
   private:
     bit_vector data_;
+
     int k_;
+
     size_t size_;
+
   public:
     class reference {
       private:
         compressed_array &arr_;
+
         int i_;
+
       public:
         reference() = delete;
 
@@ -46,7 +52,6 @@ class compressed_array {
     compressed_array() = delete;
 
     explicit compressed_array(size_t size, int k) : size_(size), k_(k), data_(size * k) {}
-
 
     void set(int i, int value) {
         data_.int_to_interval(i * k_, i * k_ + k_, value);
@@ -84,8 +89,6 @@ class compressed_array {
         }
         return os;
     }
-
 };
-
 
 #endif //THEOREM_COMPRESSED_ARRAY_H
