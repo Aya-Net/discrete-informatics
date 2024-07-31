@@ -7,7 +7,7 @@
 
 #include "bit_vector.h"
 #include "compressed_array.h"
-#include "multibranch_tree.h"
+#include "multi_branch_tree.h"
 #include "../util/util.h"
 
 class sufficient_bv {
@@ -16,7 +16,7 @@ class sufficient_bv {
 
     size_t size_, rank_;
 
-    int log_n_, log2_n_, sqrt_log_n_, half_log_n_;
+    const int log_n_, log2_n_, sqrt_log_n_, half_log_n_;
 
     compressed_array rank_1_;
 
@@ -28,7 +28,7 @@ class sufficient_bv {
 
     compressed_array select_;
 
-    multibranch_tree **select_tree_;
+    multi_branch_tree **select_tree_;
 
     void build_rank_() {
         for (int i = 0; i < size_ / log2_n_ + 1; i++) {
@@ -60,7 +60,7 @@ class sufficient_bv {
     }
 
     void build_select_() {
-        typedef multibranch_tree::node node;
+        typedef multi_branch_tree::node node;
         int block_num = 0, rank = 0, cnt = 0;
         std::queue<node *> q;
         for (int i = 0; i < size_; i++) {
@@ -75,7 +75,7 @@ class sufficient_bv {
             }
             if (rank == log2_n_ || i == size_ - 1) {
                 select_[block_num] = i;
-                select_tree_[block_num++] = new multibranch_tree(sqrt_log_n_, q);
+                select_tree_[block_num++] = new multi_branch_tree(sqrt_log_n_, q);
                 while (!q.empty()) {
                     q.pop();
                 }
@@ -114,7 +114,7 @@ class sufficient_bv {
                                                                             log_n_)),
                                                    select_table_(std::allocator<compressed_array>().allocate(
                                                            1 << half_log_n_)),
-                                                   select_tree_(std::allocator<multibranch_tree *>().allocate(
+                                                   select_tree_(std::allocator<multi_branch_tree *>().allocate(
                                                            (rank_ + log2_n_) / log2_n_)) {
         build_rank_();
         build_select_();

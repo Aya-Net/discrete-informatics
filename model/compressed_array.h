@@ -13,7 +13,7 @@ class compressed_array {
   private:
     bit_vector data_;
 
-    int k_;
+    int width_;
 
     size_t size_;
 
@@ -51,18 +51,18 @@ class compressed_array {
 
     compressed_array() = delete;
 
-    explicit compressed_array(size_t size, int k) : size_(size), k_(k), data_(size * k) {}
+    explicit compressed_array(size_t size, int width) : size_(size), width_(width), data_(size * width) {}
 
     void set(int i, int value) {
-        data_.int_to_interval(i * k_, i * k_ + k_, value);
+        data_.int_to_interval(i * width_, i * width_ + width_, value);
     }
 
     [[nodiscard]] int get(int i) const {
-        return data_.interval_to_int(i * k_, i * k_ + k_);
+        return data_.interval_to_int(i * width_, i * width_ + width_);
     }
 
     [[nodiscard]] size_t k() const {
-        return k_;
+        return width_;
     }
 
     int operator[](int i) const {
@@ -78,7 +78,7 @@ class compressed_array {
             return *this;
         }
         size_ = arr.size_;
-        k_ = arr.k_;
+        width_ = arr.width_;
         data_ = arr.data_;
         return *this;
     }

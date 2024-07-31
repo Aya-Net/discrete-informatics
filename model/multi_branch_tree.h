@@ -2,15 +2,15 @@
 // Created by 郭修屹 on 2024/7/31.
 //
 
-#ifndef THEOREM_MULTIBRANCH_TREE_H
-#define THEOREM_MULTIBRANCH_TREE_H
+#ifndef THEOREM_MULTI_BRANCH_TREE_H
+#define THEOREM_MULTI_BRANCH_TREE_H
 
 #include <queue>
 
 #include "compressed_array.h"
 #include "../util/util.h"
 
-class multibranch_tree {
+class multi_branch_tree {
   public:
     class node {
       private:
@@ -109,13 +109,13 @@ class multibranch_tree {
     }
 
   public:
-    multibranch_tree() = delete;
+    multi_branch_tree() = delete;
 
-    explicit multibranch_tree(int max_branch, std::queue<node *> &leaf) : max_branch_(max_branch) {
+    explicit multi_branch_tree(int max_branch, std::queue<node *> &leaf) : max_branch_(max_branch) {
         root_ = build_(leaf);
     }
 
-    ~multibranch_tree() {
+    ~multi_branch_tree() {
         delete_(root_);
     }
 
@@ -146,4 +146,4 @@ class multibranch_tree {
     }
 };
 
-#endif //THEOREM_MULTIBRANCH_TREE_H
+#endif //THEOREM_MULTI_BRANCH_TREE_H

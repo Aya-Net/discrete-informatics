@@ -10,4 +10,4 @@ add_executable(theorem main.cpp
         util/util.h
         util/constant.h
         model/sufficient_bv.h
-        model/multibranch_tree.h)
+        model/multi_branch_tree.h)
