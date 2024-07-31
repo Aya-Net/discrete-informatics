@@ -61,7 +61,6 @@ class multibranch_tree {
         int data() {
             return data_[0];
         }
-
     };
 
   private:
